@@ -122,7 +122,14 @@ export class MemStorage implements IStorage {
 
     samplePaintings.forEach(painting => {
       const id = this.currentPaintingId++;
-      this.paintings.set(id, { ...painting, id });
+      this.paintings.set(id, { 
+        ...painting, 
+        id,
+        originalPrice: painting.originalPrice || null,
+        isOnSale: painting.isOnSale || false,
+        isFeatured: painting.isFeatured || false,
+        isAvailable: painting.isAvailable !== false
+      });
     });
   }
 
@@ -191,7 +198,11 @@ export class MemStorage implements IStorage {
     }
     
     const id = this.currentCartId++;
-    const cartItem: CartItem = { ...insertItem, id };
+    const cartItem: CartItem = { 
+      ...insertItem, 
+      id,
+      quantity: insertItem.quantity || 1
+    };
     this.cartItems.set(id, cartItem);
     return cartItem;
   }

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { apiRequest } from './queryClient';
 
 interface CartStore {
@@ -38,7 +39,7 @@ export function useCartCount() {
   });
 
   // Update cart count whenever cart items change
-  React.useEffect(() => {
+  useEffect(() => {
     setCartCount(cartItems.length);
   }, [cartItems.length, setCartCount]);
 
