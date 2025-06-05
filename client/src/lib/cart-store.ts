@@ -1,6 +1,4 @@
 import { create } from 'zustand';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
 import { apiRequest } from './queryClient';
 
 interface CartStore {
@@ -8,7 +6,9 @@ interface CartStore {
   cartCount: number;
   toggleCart: () => void;
   setCartCount: (count: number) => void;
+  incrementCartCount: () => void;
   addToCart: (paintingId: number) => Promise<void>;
+  refreshCartCount: () => Promise<void>;
 }
 
 export const useCartStore = create<CartStore>((set, get) => ({
@@ -16,32 +16,21 @@ export const useCartStore = create<CartStore>((set, get) => ({
   cartCount: 0,
   toggleCart: () => set((state) => ({ isCartOpen: !state.isCartOpen })),
   setCartCount: (count: number) => set({ cartCount: count }),
+  incrementCartCount: () => set((state) => ({ cartCount: state.cartCount + 1 })),
   addToCart: async (paintingId: number) => {
     await apiRequest('POST', '/api/cart', { paintingId, quantity: 1 });
-    // The cart count will be updated by the cart query
+    // Immediately increment the cart count for instant feedback
+    get().incrementCartCount();
+  },
+  refreshCartCount: async () => {
+    try {
+      const res = await fetch('/api/cart', { credentials: 'include' });
+      if (res.ok) {
+        const cartItems = await res.json();
+        get().setCartCount(cartItems.length);
+      }
+    } catch (error) {
+      console.error('Failed to refresh cart count:', error);
+    }
   },
 }));
-
-// Hook to manage cart count based on cart items
-export function useCartCount() {
-  const { setCartCount } = useCartStore();
-  const queryClient = useQueryClient();
-
-  const { data: cartItems = [] } = useQuery({
-    queryKey: ['/api/cart'],
-    queryFn: async () => {
-      const res = await fetch('/api/cart', { credentials: 'include' });
-      if (!res.ok) return [];
-      return res.json();
-    },
-    refetchInterval: false,
-    refetchOnWindowFocus: false,
-  });
-
-  // Update cart count whenever cart items change
-  useEffect(() => {
-    setCartCount(cartItems.length);
-  }, [cartItems.length, setCartCount]);
-
-  return cartItems.length;
-}

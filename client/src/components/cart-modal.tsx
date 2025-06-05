@@ -37,6 +37,8 @@ export default function CartModal() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
+      // Refresh cart count immediately
+      useCartStore.getState().refreshCartCount();
       toast({
         title: "Item removed",
         description: "The item has been removed from your cart.",
@@ -57,6 +59,8 @@ export default function CartModal() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cart"] });
+      // Set cart count to 0 immediately
+      useCartStore.getState().setCartCount(0);
       toast({
         title: "Cart cleared",
         description: "All items have been removed from your cart.",
