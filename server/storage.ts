@@ -1,4 +1,6 @@
 import { paintings, cartItems, contactMessages, type Painting, type InsertPainting, type CartItem, type InsertCartItem, type ContactMessage, type InsertContactMessage } from "@shared/schema";
+import { db } from "./db";
+import { eq, like, and, gte, lte } from "drizzle-orm";
 
 export interface IStorage {
   // Paintings
@@ -16,6 +18,146 @@ export interface IStorage {
   
   // Contact
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
+}
+
+export class DatabaseStorage implements IStorage {
+  async getAllPaintings(): Promise<Painting[]> {
+    const result = await db.select().from(paintings).where(eq(paintings.isAvailable, true));
+    return result;
+  }
+
+  async getPaintingById(id: number): Promise<Painting | undefined> {
+    const result = await db.select().from(paintings).where(eq(paintings.id, id)).limit(1);
+    return result[0] || undefined;
+  }
+
+  async getFeaturedPaintings(): Promise<Painting[]> {
+    const result = await db.select().from(paintings)
+      .where(and(eq(paintings.isFeatured, true), eq(paintings.isAvailable, true)));
+    return result;
+  }
+
+  async searchPaintings(query: string): Promise<Painting[]> {
+    const lowercaseQuery = `%${query.toLowerCase()}%`;
+    const result = await db.select().from(paintings)
+      .where(and(
+        eq(paintings.isAvailable, true),
+        like(paintings.title, lowercaseQuery)
+      ));
+    return result;
+  }
+
+  async filterPaintings(category?: string, priceRange?: string): Promise<Painting[]> {
+    const conditions = [eq(paintings.isAvailable, true)];
+    
+    if (category && category !== "All Categories") {
+      conditions.push(eq(paintings.category, category));
+    }
+    
+    if (priceRange && priceRange !== "All Prices") {
+      const priceConditions = this.getPriceConditions(priceRange);
+      if (priceConditions) {
+        conditions.push(priceConditions);
+      }
+    }
+    
+    const result = await db.select().from(paintings).where(and(...conditions));
+    return result;
+  }
+
+  private getPriceConditions(priceRange: string) {
+    switch (priceRange) {
+      case "Under $500":
+        return lte(paintings.price, "500");
+      case "$500 - $1000":
+        return and(gte(paintings.price, "500"), lte(paintings.price, "1000"));
+      case "$1000 - $2000":
+        return and(gte(paintings.price, "1000"), lte(paintings.price, "2000"));
+      case "Over $2000":
+        return gte(paintings.price, "2000");
+      default:
+        return null;
+    }
+  }
+
+  async addToCart(item: InsertCartItem): Promise<CartItem> {
+    // Check if item already exists for this session
+    const existing = await db.select().from(cartItems)
+      .where(and(
+        eq(cartItems.paintingId, item.paintingId),
+        eq(cartItems.sessionId, item.sessionId)
+      ))
+      .limit(1);
+    
+    if (existing.length > 0) {
+      const updatedItem = {
+        ...existing[0],
+        quantity: (existing[0].quantity || 1) + (item.quantity || 1)
+      };
+      
+      await db.update(cartItems)
+        .set({ quantity: updatedItem.quantity })
+        .where(eq(cartItems.id, existing[0].id));
+      
+      return updatedItem;
+    }
+    
+    const result = await db.insert(cartItems)
+      .values({
+        ...item,
+        quantity: item.quantity || 1
+      })
+      .returning();
+    
+    return result[0];
+  }
+
+  async getCartItems(sessionId: string): Promise<(CartItem & { painting: Painting })[]> {
+    const result = await db.select({
+      id: cartItems.id,
+      paintingId: cartItems.paintingId,
+      sessionId: cartItems.sessionId,
+      quantity: cartItems.quantity,
+      painting: {
+        id: paintings.id,
+        title: paintings.title,
+        price: paintings.price,
+        imageUrl: paintings.imageUrl,
+        dimensions: paintings.dimensions,
+        description: paintings.description,
+        originalPrice: paintings.originalPrice,
+        medium: paintings.medium,
+        category: paintings.category,
+        isOnSale: paintings.isOnSale,
+        isFeatured: paintings.isFeatured,
+        isAvailable: paintings.isAvailable
+      }
+    })
+    .from(cartItems)
+    .innerJoin(paintings, eq(cartItems.paintingId, paintings.id))
+    .where(eq(cartItems.sessionId, sessionId));
+
+    return result;
+  }
+
+  async removeFromCart(id: number): Promise<void> {
+    await db.delete(cartItems).where(eq(cartItems.id, id));
+  }
+
+  async clearCart(sessionId: string): Promise<void> {
+    await db.delete(cartItems).where(eq(cartItems.sessionId, sessionId));
+  }
+
+  async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
+    const result = await db.insert(contactMessages)
+      .values({
+        ...message,
+        createdAt: new Date().toISOString()
+      })
+      .returning();
+    
+    return result[0];
+  }
 }
 
 export class MemStorage implements IStorage {
@@ -239,4 +381,4 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
