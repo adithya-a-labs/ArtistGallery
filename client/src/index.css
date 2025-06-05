@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Crimson+Text:ital@1&display=swap');
+
+:root {
+  --background: 0 0% 98%; /* #FAFAFA */
+  --foreground: 0 0% 10%; /* #1A1A1A */
+  --muted: 0 0% 96%; /* #F5F5F5 */
+  --muted-foreground: 0 0% 40%; /* #666666 */
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
+  --border: 0 0% 91%; /* #E8E8E8 */
+  --input: 0 0% 91%;
+  --primary: 45 100% 35%; /* #B8860B golden */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 0 0% 15%;
+  --accent: 0 0% 96%;
+  --accent-foreground: 0 0% 15%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 0 0% 10%;
+  --radius: 0.75rem;
+  
+  /* Custom colors */
+  --golden: 45 100% 35%; /* #B8860B */
+  --saddle: 25 63% 32%; /* #8B4513 */
+  --charcoal: 0 0% 10%; /* #1A1A1A */
+}
+
+.dark {
+  --background: 0 0% 15%;
+  --foreground: 0 0% 98%;
+  --muted: 0 0% 20%;
+  --muted-foreground: 0 0% 65%;
+  --popover: 0 0% 15%;
+  --popover-foreground: 0 0% 98%;
+  --card: 0 0% 15%;
+  --card-foreground: 0 0% 98%;
+  --border: 0 0% 25%;
+  --input: 0 0% 25%;
+  --primary: 45 100% 35%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 20%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 0 0% 20%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62% 31%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 0 0% 84%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  .font-serif {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .font-accent {
+    font-family: 'Crimson Text', serif;
+  }
+  
+  .painting-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .painting-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  }
+  
+  .discount-badge {
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+  
+  .hero-bg {
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
+  }
+  
+  .artistic-divider {
+    background: linear-gradient(90deg, transparent 0%, hsl(var(--golden)) 50%, transparent 100%);
+  }
+  
+  .text-golden {
+    color: hsl(var(--golden));
+  }
+  
+  .bg-golden {
+    background-color: hsl(var(--golden));
+  }
+  
+  .text-charcoal {
+    color: hsl(var(--charcoal));
+  }
+  
+  .bg-charcoal {
+    background-color: hsl(var(--charcoal));
+  }
+  
+  .border-golden {
+    border-color: hsl(var(--golden));
+  }
+}
