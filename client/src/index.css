@@ -1,35 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Crimson+Text:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Crimson+Text:ital@1&family=Poppins:wght@300;400;500;600;700&family=Spectral:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 98%; /* #FAFAFA */
-  --foreground: 0 0% 10%; /* #1A1A1A */
-  --muted: 0 0% 96%; /* #F5F5F5 */
-  --muted-foreground: 0 0% 40%; /* #666666 */
+  --background: 40 35% 98%; /* #FEFBF6 - warm cream */
+  --foreground: 30 100% 10%; /* #331900 - deep brown */
+  --muted: 40 43% 94%; /* #FAEBD7 - antique white */
+  --muted-foreground: 25 63% 32%; /* #8B4513 - saddle brown */
   --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 10%;
+  --popover-foreground: 30 100% 10%;
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 10%;
-  --border: 0 0% 91%; /* #E8E8E8 */
-  --input: 0 0% 91%;
-  --primary: 45 100% 35%; /* #B8860B golden */
+  --card-foreground: 30 100% 10%;
+  --border: 40 43% 85%; /* #DEB887 - burlywood */
+  --input: 0 0% 100%;
+  --primary: 0 59% 58%; /* #CD5C5C - Indian red */
   --primary-foreground: 0 0% 100%;
-  --secondary: 0 0% 96%;
-  --secondary-foreground: 0 0% 15%;
-  --accent: 0 0% 96%;
-  --accent-foreground: 0 0% 15%;
+  --secondary: 40 67% 86%; /* #FFDAB9 - peach */
+  --secondary-foreground: 30 100% 10%;
+  --accent: 39 100% 50%; /* #FFA500 - saffron orange */
+  --accent-foreground: 30 100% 10%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
-  --ring: 0 0% 10%;
+  --ring: 39 100% 50%; /* saffron orange */
   --radius: 0.75rem;
   
-  /* Custom colors */
-  --golden: 45 100% 35%; /* #B8860B */
-  --saddle: 25 63% 32%; /* #8B4513 */
-  --charcoal: 0 0% 10%; /* #1A1A1A */
+  /* Indian cultural colors */
+  --saffron: 39 100% 50%; /* #FFA500 */
+  --turmeric: 45 100% 50%; /* #FFD700 */
+  --henna: 15 55% 40%; /* #A0522D */
+  --sandalwood: 40 43% 85%; /* #DEB887 */
+  --terracotta: 16 65% 50%; /* #E2725B */
+  --indigo: 235 100% 30%; /* #0033CC */
+  --emerald: 150 100% 25%; /* #008040 */
 }
 
 .dark {
@@ -52,6 +56,109 @@
   --destructive: 0 62% 31%;
   --destructive-foreground: 0 0% 98%;
   --ring: 0 0% 84%;
+}
+
+/* Smooth animations and transitions */
+* {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover effects */
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.3);
+}
+
+/* Scroll animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+/* Animation classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.8s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 165, 0, 0.2), transparent);
+  background-size: 200px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Indian pattern decorations */
+.indian-pattern {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 165, 0, 0.1) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* Backdrop blur for modern glass effect */
+.glass-morphism {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(45deg, #CD5C5C, #FFA500, #FFD700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 @layer base {

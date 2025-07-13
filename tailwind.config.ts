@@ -61,6 +61,20 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        saffron: "hsl(var(--saffron))",
+        turmeric: "hsl(var(--turmeric))",
+        henna: "hsl(var(--henna))",
+        sandalwood: "hsl(var(--sandalwood))",
+        terracotta: "hsl(var(--terracotta))",
+        indigo: "hsl(var(--indigo))",
+        emerald: "hsl(var(--emerald))",
+      },
+      fontFamily: {
+        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ["Playfair Display", "ui-serif", "Georgia", "serif"],
+        cursive: ["Crimson Text", "cursive"],
+        poppins: ["Poppins", "ui-sans-serif", "system-ui", "sans-serif"],
+        spectral: ["Spectral", "ui-serif", "Georgia", "serif"],
       },
       keyframes: {
         "accordion-down": {
