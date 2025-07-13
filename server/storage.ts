@@ -260,6 +260,32 @@ export class MemStorage implements IStorage {
         isFeatured: false,
         isAvailable: true,
       },
+      {
+        title: "Cosmic Eye",
+        description: "A mesmerizing celestial artwork depicting the infinite beauty of cosmic formations with vibrant stellar colors and ethereal luminosity that captures the mystery of deep space.",
+        imageUrl: "/assets/black-hole-7213501_1752405668297.jpg",
+        price: "1850.00",
+        originalPrice: "2200.00",
+        medium: "Digital Art on Canvas",
+        dimensions: "36\" x 48\"",
+        category: "Space",
+        isOnSale: true,
+        isFeatured: true,
+        isAvailable: true,
+      },
+      {
+        title: "Galactic Spiral",
+        description: "An awe-inspiring representation of a cosmic spiral with swirling nebulae in brilliant purples and magentas, showcasing the dynamic forces that shape our universe.",
+        imageUrl: "/assets/black-hole-9038900_1752405668297.jpg",
+        price: "2100.00",
+        originalPrice: "2500.00",
+        medium: "Digital Art on Canvas",
+        dimensions: "40\" x 52\"",
+        category: "Space",
+        isOnSale: true,
+        isFeatured: true,
+        isAvailable: true,
+      },
     ];
 
     samplePaintings.forEach(painting => {
@@ -381,4 +407,4 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new DatabaseStorage();
+export const storage = new MemStorage();

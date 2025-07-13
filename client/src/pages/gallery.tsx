@@ -92,6 +92,7 @@ export default function Gallery() {
                     <SelectItem value="Abstract">Abstract</SelectItem>
                     <SelectItem value="Landscape">Landscape</SelectItem>
                     <SelectItem value="Modern">Modern</SelectItem>
+                    <SelectItem value="Space">Space</SelectItem>
                     <SelectItem value="Portrait">Portrait</SelectItem>
                     <SelectItem value="Still Life">Still Life</SelectItem>
                   </SelectContent>

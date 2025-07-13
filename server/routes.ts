@@ -2,8 +2,13 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertCartItemSchema, insertContactMessageSchema } from "@shared/schema";
+import path from "path";
+import express from "express";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Serve static assets
+  app.use('/assets', express.static(path.join(process.cwd(), 'attached_assets')));
+
   // Get all paintings
   app.get("/api/paintings", async (req, res) => {
     try {
