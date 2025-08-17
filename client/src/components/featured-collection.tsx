@@ -21,6 +21,8 @@ export default function FeaturedCollection() {
     queryKey: ["/api/paintings/featured"],
   });
 
+  const paintingsArray = Array.isArray(paintings) ? paintings : [];
+
   const collections = [
     {
       title: "Chief Curator Picks: Summer 2025",
@@ -67,7 +69,7 @@ export default function FeaturedCollection() {
   ];
 
   const loadMore = () => {
-    setVisibleItems(prev => Math.min(prev + 3, paintings.length));
+    setVisibleItems(prev => Math.min(prev + 3, paintingsArray.length));
   };
 
   if (isLoading) {
@@ -95,10 +97,10 @@ export default function FeaturedCollection() {
         {/* Featured Collections Header */}
         <div className={`text-center mb-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-spectral">
-            Featured Collections
+            Featured Artists & Collections
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-poppins">
-            Discover curated collections that celebrate the rich tapestry of Indian art and culture
+            Support talented homemade artists creating authentic, original artwork from their studios across India
           </p>
         </div>
 
@@ -150,21 +152,30 @@ export default function FeaturedCollection() {
           ))}
         </div>
 
-        {/* Reward Section */}
+        {/* Artist Support Section */}
         <div className={`bg-gradient-to-r from-primary to-accent rounded-3xl p-8 md:p-12 text-center text-white mb-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <h3 className="text-3xl md:text-4xl font-bold mb-4 font-spectral">
-            Collect More, Earn More
+            Support Homemade Artists
           </h3>
           <p className="text-xl mb-6 font-poppins">
-            Spend ₹5,000 or more on original art and receive up to ₹3,000 in ArtSaathi credit.
+            Every purchase directly supports talented artists creating from their home studios across India
           </p>
-          <Button 
-            size="lg" 
-            variant="secondary" 
-            className="bg-white text-primary hover:bg-white/90 px-8 py-6 font-semibold hover-lift font-poppins"
-          >
-            Learn More
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              variant="secondary" 
+              className="bg-white text-primary hover:bg-white/90 px-8 py-6 font-semibold hover-lift font-poppins"
+            >
+              Become an Artist
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-white text-white hover:bg-white/10 px-8 py-6 font-semibold hover-lift font-poppins"
+            >
+              Learn More
+            </Button>
+          </div>
         </div>
 
         {/* Featured Artworks */}
@@ -179,7 +190,7 @@ export default function FeaturedCollection() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {paintings.slice(0, visibleItems).map((painting: any, index: number) => (
+            {paintingsArray.slice(0, visibleItems).map((painting: any, index: number) => (
               <Card 
                 key={painting.id} 
                 className={`group overflow-hidden hover-lift hover-glow ${
@@ -252,7 +263,7 @@ export default function FeaturedCollection() {
             ))}
           </div>
 
-          {visibleItems < paintings.length && (
+          {visibleItems < paintingsArray.length && (
             <div className="text-center mt-12">
               <Button 
                 variant="outline" 

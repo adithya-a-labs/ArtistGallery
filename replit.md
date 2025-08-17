@@ -1,15 +1,17 @@
-# Art Gallery E-commerce Platform
+# ArtSaathi - Homemade Artist Marketplace Platform
 
 ## Overview
 
-This is a full-stack art gallery e-commerce platform built with React, TypeScript, Express, and PostgreSQL. The application allows users to browse, search, and purchase original paintings from an artist's collection. It features a modern, responsive design with shopping cart functionality and a contact system.
+ArtSaathi is a full-stack marketplace platform built with React, TypeScript, Express, and PostgreSQL that connects homemade artists with art consumers across India. The platform enables talented artists working from home studios to showcase and sell their authentic, handcrafted artworks while providing art lovers with access to unique, original pieces. It features an authentically Indian design inspired by Saatchi Art's structure, with beautiful fluidic animations and cultural aesthetics.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
-Design Style: Authentically Indian art gallery with Saatchi Art-inspired structure
+Design Style: Authentically Indian marketplace with Saatchi Art-inspired structure
 Animation Style: Beautiful, fluidic animations with intuitive user experience
 Cultural Theme: Indian aesthetics and cultural elements
+Platform Purpose: Marketplace to connect homemade artists with consumers across India
+Branding: ArtSaathi - emphasizing support for homemade artists and authentic craftsmanship
 
 ## System Architecture
 

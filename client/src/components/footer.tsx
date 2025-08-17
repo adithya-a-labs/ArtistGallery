@@ -59,8 +59,8 @@ export default function Footer() {
               <span className="text-2xl font-bold font-spectral">ArtSaathi</span>
             </div>
             <p className="text-background/80 mb-6 leading-relaxed font-poppins">
-              Discover and buy original artworks from India's most talented artists. 
-              Each piece tells a unique story of passion, creativity, and cultural heritage.
+              India's premier marketplace connecting homemade artists with art lovers. 
+              Discover authentic, handcrafted artworks made in home studios across the country.
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="sm" className="text-background/80 hover:text-background hover:bg-background/10">
@@ -152,9 +152,9 @@ export default function Footer() {
         <div className="border-t border-background/20 pt-12 mb-12">
           <div className="max-w-4xl mx-auto text-center">
             <blockquote className="text-lg italic mb-4 font-spectral">
-              "At ArtSaathi, we make it our mission to help you discover and buy from the best emerging artists around the world. 
-              Whether you're looking to discover a new artist, add a statement piece to your home, or commemorate an important life event, 
-              ArtSaathi is your portal to thousands of original works by today's top artists."
+              "ArtSaathi bridges the gap between talented homemade artists and art enthusiasts across India. 
+              Our platform empowers artists to showcase their creativity while helping collectors discover unique, authentic pieces 
+              made with love in home studios. Every artwork tells a story of passion and dedication."
             </blockquote>
             <div className="flex items-center justify-center space-x-4">
               <div className="w-12 h-12 bg-primary/20 rounded-full"></div>

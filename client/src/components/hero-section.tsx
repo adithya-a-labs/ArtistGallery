@@ -24,7 +24,7 @@ export default function HeroSection() {
       <div className="bg-primary text-primary-foreground py-3 px-4 text-center text-sm font-medium animate-shimmer">
         <div className="flex items-center justify-center gap-2">
           <Star className="h-4 w-4" />
-          <span>Unlock Up to ₹3,000 in Rewards - Shop & Earn Now</span>
+          <span>Join 10,000+ Artists & Art Lovers - Free Registration for Artists</span>
           <Star className="h-4 w-4" />
         </div>
       </div>
@@ -45,12 +45,12 @@ export default function HeroSection() {
             <div className={`space-y-8 ${isVisible ? 'animate-slide-in-left' : 'opacity-0'}`}>
               <div className="space-y-4">
                 <h1 className="text-5xl md:text-7xl font-bold leading-tight font-spectral">
-                  <span className="gradient-text">Collect More,</span>
+                  <span className="gradient-text">Discover</span>
                   <br />
-                  <span className="text-foreground">Earn More</span>
+                  <span className="text-foreground">Homemade Art</span>
                 </h1>
                 <p className="text-xl text-muted-foreground font-poppins">
-                  Earn Up to ₹3,000—Offer Ends Soon
+                  Connect directly with talented homemade artists across India
                 </p>
               </div>
               

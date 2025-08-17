@@ -24,10 +24,10 @@ export default function Navbar() {
     { name: "Sculpture", href: "/gallery?category=Sculpture" },
     { name: "Drawings", href: "/gallery?category=Drawings" },
     { name: "Prints", href: "/gallery?category=Prints" },
-    { name: "Inspiration", href: "/gallery" },
-    { name: "Art Advisory", href: "/gallery" },
-    { name: "Trade", href: "/gallery" },
-    { name: "Curated Deals", href: "/gallery" },
+    { name: "Artists", href: "/artists" },
+    { name: "Sell Art", href: "/sell-art" },
+    { name: "Collections", href: "/gallery" },
+    { name: "Support", href: "/support" },
   ];
 
   const handleSearch = (e: React.FormEvent) => {
