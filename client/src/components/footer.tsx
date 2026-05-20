@@ -6,11 +6,11 @@ import { useState } from "react";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle newsletter subscription
-    console.log("Newsletter signup:", email);
+    setSubscribed(true);
     setEmail("");
   };
 
@@ -45,46 +45,114 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-br from-foreground to-foreground/90 text-background py-16">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Top Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-12">
-          
-          {/* Brand Section */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
-                <span className="text-white font-bold">A</span>
+    <footer className="bg-foreground text-background overflow-hidden relative">
+
+      {/* Scattered doodles */}
+      <div className="absolute top-12 right-20 opacity-8 animate-wiggle pointer-events-none">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="34" stroke="white" strokeWidth="1" strokeDasharray="6 5" />
+        </svg>
+      </div>
+      <div className="absolute bottom-20 left-10 opacity-6 animate-float pointer-events-none">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect x="6" y="6" width="44" height="44" stroke="white" strokeWidth="1" strokeDasharray="4 3" />
+        </svg>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 pt-16 pb-10 relative z-10">
+
+        {/* ── Top: brand + newsletter ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 mb-14 border-b border-background/15 pb-14">
+
+          {/* Brand */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-2.5 mb-5">
+              <div className="relative">
+                <div className="w-9 h-9 bg-primary rounded-sm rotate-6" />
+                <span className="absolute inset-0 flex items-center justify-center text-primary-foreground font-fraunces font-bold text-sm rotate-6">A</span>
               </div>
-              <span className="text-2xl font-bold font-spectral">ArtSaathi</span>
+              <span className="text-2xl font-fraunces font-semibold">
+                Art<span className="italic text-primary/80">Saathi</span>
+              </span>
             </div>
-            <p className="text-background/80 mb-6 leading-relaxed font-poppins">
-              India's premier marketplace connecting homemade artists with art lovers. 
-              Discover authentic, handcrafted artworks made in home studios across the country.
+
+            <p className="text-background/65 font-dm text-sm leading-relaxed mb-5 max-w-xs">
+              India's marketplace for homemade art. Every piece is handmade, original, and comes directly from an artist's home studio.
             </p>
-            <div className="flex space-x-4">
-              <Button variant="ghost" size="sm" className="text-background/80 hover:text-background hover:bg-background/10">
-                <Instagram className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="sm" className="text-background/80 hover:text-background hover:bg-background/10">
-                <Twitter className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="sm" className="text-background/80 hover:text-background hover:bg-background/10">
-                <Facebook className="h-5 w-5" />
-              </Button>
+
+            {/* Handwritten tagline */}
+            <p className="handwritten text-background/40 text-lg mb-6">
+              made in India, made with love ♥
+            </p>
+
+            <div className="flex items-center gap-2">
+              {[
+                { icon: Instagram, label: "Instagram" },
+                { icon: Twitter, label: "Twitter" },
+                { icon: Facebook, label: "Facebook" },
+              ].map(({ icon: Icon, label }) => (
+                <button
+                  key={label}
+                  className="w-9 h-9 rounded-full border border-background/20 flex items-center justify-center text-background/60 hover:text-background hover:border-background/50 transition-all duration-200"
+                  aria-label={label}
+                >
+                  <Icon className="h-4 w-4" />
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Links Sections */}
+          {/* Newsletter */}
+          <div className="lg:col-span-3 lg:pl-8">
+            <h3 className="font-fraunces text-2xl font-semibold mb-2">
+              Stay in the loop
+            </h3>
+            <p className="handwritten text-background/50 text-base mb-4">
+              new artists, fresh collections, no spam
+            </p>
+            <p className="text-background/60 font-dm text-sm mb-5">
+              Subscribe to hear about new artworks, artist spotlights, and exclusive early access.
+            </p>
+
+            {subscribed ? (
+              <div className="inline-flex items-center gap-2 bg-background/10 rounded-full px-5 py-3 border border-background/20">
+                <Heart className="h-4 w-4 text-primary" />
+                <span className="font-dm text-sm text-background/80">You're in! Thanks for subscribing.</span>
+              </div>
+            ) : (
+              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-sm">
+                <Input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="flex-1 bg-background/8 border-background/25 text-background placeholder:text-background/40 focus:border-primary rounded-full font-dm text-sm"
+                />
+                <Button
+                  type="submit"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-6 font-dm text-sm font-medium"
+                >
+                  Subscribe
+                </Button>
+              </form>
+            )}
+          </div>
+        </div>
+
+        {/* ── Link columns ── */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-14 border-b border-background/15 pb-14">
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h3 className="text-lg font-semibold mb-4 font-spectral">{category}</h3>
-              <ul className="space-y-3">
+              <h4 className="font-fraunces text-sm font-semibold tracking-wide uppercase text-background/50 mb-4">
+                {category}
+              </h4>
+              <ul className="space-y-2.5">
                 {links.map((link) => (
                   <li key={link.name}>
                     <Link
                       to={link.href}
-                      className="text-background/80 hover:text-background transition-colors duration-200 font-poppins"
+                      className="text-background/65 hover:text-background font-dm text-sm transition-colors duration-150"
                     >
                       {link.name}
                     </Link>
@@ -95,167 +163,95 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Newsletter Section */}
-        <div className="border-t border-background/20 pt-12 mb-12">
-          <div className="max-w-2xl mx-auto text-center">
-            <h3 className="text-2xl font-bold mb-4 font-spectral">Stay Connected</h3>
-            <p className="text-background/80 mb-6 font-poppins">
-              Subscribe to our newsletter and be the first to know about new artworks, exclusive collections, and special offers.
-            </p>
-            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="flex-1 bg-background/10 border-background/20 text-background placeholder-background/60 focus:border-primary"
-              />
-              <Button 
-                type="submit" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 font-poppins"
-              >
-                Subscribe
-              </Button>
-            </form>
-          </div>
-        </div>
-
-        {/* Contact Info */}
-        <div className="border-t border-background/20 pt-12 mb-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="flex flex-col items-center space-y-2">
-              <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-2">
-                <Mail className="h-6 w-6 text-primary" />
-              </div>
-              <h4 className="font-semibold font-spectral">Email Us</h4>
-              <p className="text-background/80 font-poppins">support@artsaathi.com</p>
-            </div>
-            <div className="flex flex-col items-center space-y-2">
-              <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-2">
-                <Phone className="h-6 w-6 text-primary" />
-              </div>
-              <h4 className="font-semibold font-spectral">Call Us</h4>
-              <p className="text-background/80 font-poppins">+91 98765 43210</p>
-            </div>
-            <div className="flex flex-col items-center space-y-2">
-              <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-2">
-                <MapPin className="h-6 w-6 text-primary" />
-              </div>
-              <h4 className="font-semibold font-spectral">Visit Us</h4>
-              <p className="text-background/80 font-poppins">Mumbai, India</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Art Advisory Quote */}
-        <div className="border-t border-background/20 pt-12 mb-12">
-          <div className="max-w-4xl mx-auto text-center">
-            <blockquote className="text-lg italic mb-4 font-spectral">
-              "ArtSaathi bridges the gap between talented homemade artists and art enthusiasts across India. 
-              Our platform empowers artists to showcase their creativity while helping collectors discover unique, authentic pieces 
-              made with love in home studios. Every artwork tells a story of passion and dedication."
+        {/* ── Editorial quote ── */}
+        <div className="mb-14 border-b border-background/15 pb-14">
+          <div className="max-w-3xl">
+            <span className="handwritten text-background/35 text-4xl leading-none block mb-2">"</span>
+            <blockquote className="font-instrument italic text-background/75 text-xl leading-relaxed mb-5">
+              ArtSaathi bridges the gap between talented homemade artists and art enthusiasts across India.
+              Every artwork tells a story of passion and dedication.
             </blockquote>
-            <div className="flex items-center justify-center space-x-4">
-              <div className="w-12 h-12 bg-primary/20 rounded-full"></div>
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-background/15 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1494790108755-2616b612b977?w=36&h=36&fit=crop&crop=face"
+                  alt="Priya Sharma"
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div>
-                <p className="font-semibold font-spectral">Priya Sharma</p>
-                <p className="text-sm text-background/80 font-poppins">Chief Curator & VP, Art Advisory</p>
+                <p className="font-fraunces text-sm text-background/80 font-semibold">Priya Sharma</p>
+                <p className="text-xs text-background/50 font-dm">Chief Curator & VP, Art Advisory</p>
               </div>
             </div>
-            <Link to="/advisory">
-              <Button 
-                variant="outline" 
-                className="mt-6 border-background/20 text-background hover:bg-background/10 font-poppins"
-              >
-                Work with an Art Advisor
-              </Button>
-            </Link>
           </div>
         </div>
 
-        {/* More to Explore */}
-        <div className="border-t border-background/20 pt-12 mb-12">
-          <h3 className="text-2xl font-bold text-center mb-8 font-spectral">More to Explore</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* ── Contact + Trust ── */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14 border-b border-background/15 pb-14">
+          {[
+            { icon: Mail, label: "Email Us", value: "hello@artsaathi.com" },
+            { icon: Phone, label: "Call Us", value: "+91 98765 43210" },
+            { icon: MapPin, label: "Based in", value: "Mumbai, India" },
+          ].map(({ icon: Icon, label, value }) => (
+            <div key={label} className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-background/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Icon className="h-3.5 w-3.5 text-background/60" />
+              </div>
+              <div>
+                <p className="font-fraunces text-sm font-semibold text-background/80">{label}</p>
+                <p className="text-background/55 font-dm text-sm">{value}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ── Trust badges ── */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14 border-b border-background/15 pb-14 text-center">
+          {[
+            { emoji: "🌏", title: "Artists Across India", desc: "Thousands of independent creators from every corner of the country." },
+            { emoji: "🤝", title: "14-Day Satisfaction", desc: "Not happy? Return it within 14 days and we'll help you find something you love." },
+            { emoji: "🎨", title: "Free Art Advisory", desc: "Get matched with a curator who knows your taste — no charge." },
+          ].map(({ emoji, title, desc }) => (
+            <div key={title} className="flex flex-col items-center">
+              <div className="text-3xl mb-3">{emoji}</div>
+              <h4 className="font-fraunces text-sm font-semibold text-background/80 mb-2">{title}</h4>
+              <p className="text-background/50 text-xs font-dm leading-relaxed max-w-[220px]">{desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* ── More to Explore ── */}
+        <div className="mb-10 border-b border-background/15 pb-10">
+          <h3 className="font-fraunces text-xl font-semibold mb-6 text-background/80">More to Explore</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              {
-                title: "How to Buy Art You Love",
-                description: "A comprehensive guide to finding the perfect artwork for your space and style.",
-                link: "/guide/buying-art"
-              },
-              {
-                title: "Living with Art",
-                description: "Stories from collectors who have transformed their homes with meaningful art.",
-                link: "/stories/living-with-art"
-              },
-              {
-                title: "Art for Your Style",
-                description: "Discover how to choose art that complements your unique aesthetic and personality.",
-                link: "/guide/art-for-your-style"
-              }
-            ].map((item, index) => (
-              <div key={index} className="text-center">
-                <h4 className="font-semibold mb-2 font-spectral">{item.title}</h4>
-                <p className="text-background/80 text-sm mb-4 font-poppins">{item.description}</p>
+              { title: "How to Buy Art You Love", desc: "A guide to finding the perfect artwork for your space.", link: "/guide/buying-art" },
+              { title: "Living with Art", desc: "Stories from collectors who transformed their homes.", link: "/stories/living-with-art" },
+              { title: "Art for Your Style", desc: "Discover art that complements your personality.", link: "/guide/art-for-your-style" },
+            ].map((item) => (
+              <div key={item.title}>
+                <h4 className="font-fraunces text-sm font-semibold text-background/75 mb-1">{item.title}</h4>
+                <p className="text-background/45 text-xs font-dm mb-2 leading-relaxed">{item.desc}</p>
                 <Link to={item.link}>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="text-primary hover:text-primary/80 hover:bg-primary/10 font-poppins"
-                  >
-                    Learn More
-                  </Button>
+                  <span className="text-primary/80 text-xs font-dm hover:text-primary transition-colors">
+                    Read more →
+                  </span>
                 </Link>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Trust Badges */}
-        <div className="border-t border-background/20 pt-12 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald to-saffron rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🌏</span>
-              </div>
-              <h4 className="font-semibold mb-2 font-spectral">Global Selection</h4>
-              <p className="text-background/80 text-sm font-poppins">
-                Explore an unparalleled selection of paintings, photography, sculpture, and more by thousands of artists from around the world.
-              </p>
-            </div>
-            <div>
-              <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="h-8 w-8 text-white" />
-              </div>
-              <h4 className="font-semibold mb-2 font-spectral">Satisfaction Guaranteed</h4>
-              <p className="text-background/80 text-sm font-poppins">
-                Our 14-day satisfaction guarantee allows you to buy with confidence. If you're not satisfied, return it and we'll help you find a work you love.
-              </p>
-            </div>
-            <div>
-              <div className="w-16 h-16 bg-gradient-to-br from-indigo to-emerald rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎨</span>
-              </div>
-              <h4 className="font-semibold mb-2 font-spectral">Complimentary Art Advisory</h4>
-              <p className="text-background/80 text-sm font-poppins">
-                Our personalized art advisory service gives you access to your own expert curator, free of charge.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Section */}
-        <div className="border-t border-background/20 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-background/60 text-sm font-poppins">
-              © 2025 ArtSaathi. All rights reserved.
-            </p>
-            <div className="flex items-center space-x-4 mt-4 md:mt-0">
-              <span className="text-background/60 text-sm font-poppins">Made with</span>
-              <Heart className="h-4 w-4 text-primary" />
-              <span className="text-background/60 text-sm font-poppins">in India</span>
-            </div>
+        {/* ── Bottom bar ── */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-3">
+          <p className="text-background/40 text-xs font-dm">
+            © 2025 ArtSaathi. All rights reserved.
+          </p>
+          <div className="flex items-center gap-1.5 text-background/40 text-xs font-dm">
+            <span>Made with</span>
+            <Heart className="h-3 w-3 text-primary fill-primary" />
+            <span>in India</span>
           </div>
         </div>
       </div>
