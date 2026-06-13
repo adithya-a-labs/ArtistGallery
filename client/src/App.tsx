@@ -12,6 +12,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import CartModal from "@/components/cart-modal";
 import { useCartStore } from "@/lib/cart-store";
+import { Analytics } from "@vercel/analytics/react";
 
 function Router() {
   const { refreshCartCount } = useCartStore();
@@ -44,6 +45,7 @@ function App() {
       <TooltipProvider>
         <Toaster />
         <Router />
+        <Analytics />
       </TooltipProvider>
     </QueryClientProvider>
   );
