@@ -6,6 +6,10 @@ import path from "path";
 import express from "express";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  app.get("/health", (_req, res) => {
+    res.status(200).json({ status: "ok" });
+  });
+
   // Serve static assets
   app.use('/assets', express.static(path.join(process.cwd(), 'attached_assets')));
 

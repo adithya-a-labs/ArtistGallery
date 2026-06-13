@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { apiUrl } from './api';
 import { apiRequest } from './queryClient';
 
 interface CartStore {
@@ -24,7 +25,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
   },
   refreshCartCount: async () => {
     try {
-      const res = await fetch('/api/cart', { credentials: 'include' });
+      const res = await fetch(apiUrl('/api/cart'), { credentials: 'include' });
       if (res.ok) {
         const cartItems = await res.json();
         get().setCartCount(cartItems.length);

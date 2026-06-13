@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import PaintingCard from "@/components/painting-card";
+import { apiUrl } from "@/lib/api";
 import type { Painting } from "@shared/schema";
 
 export default function Gallery() {
@@ -23,7 +24,7 @@ export default function Gallery() {
       if (categoryFilter !== "All Categories") params.set("category", categoryFilter);
       if (priceFilter !== "All Prices") params.set("priceRange", priceFilter);
       
-      const res = await fetch(`/api/paintings/filter?${params}`);
+      const res = await fetch(apiUrl(`/api/paintings/filter?${params}`));
       if (!res.ok) throw new Error("Failed to fetch filtered paintings");
       return res.json();
     },
@@ -33,7 +34,7 @@ export default function Gallery() {
   const { data: searchResults = [] } = useQuery<Painting[]>({
     queryKey: ["/api/paintings/search", searchQuery],
     queryFn: async () => {
-      const res = await fetch(`/api/paintings/search/${encodeURIComponent(searchQuery)}`);
+      const res = await fetch(apiUrl(`/api/paintings/search/${encodeURIComponent(searchQuery)}`));
       if (!res.ok) throw new Error("Failed to search paintings");
       return res.json();
     },
