@@ -1,0 +1,134 @@
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+[1G[0K11:12:38 AM [express] serving on port 5000
+Browserslist: browsers data (caniuse-lite) is 19 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+11:12:41 AM [express] GET /api/paintings/featured 200 in 2ms :: [{"title":"Geometric Dreams","descrip…
+11:12:41 AM [express] GET /api/cart 200 in 1ms :: []
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:13:01 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2m/home/runner/workspace/tailwind.config.ts[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:13:29 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/navbar.tsx, /src/index.css?v=fPA1coaaggH4-9UjkoQ0c[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:14:11 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/hero-section.tsx, /src/index.css?v=fPA1coaaggH4-9UjkoQ0c[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:15:12 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/featured-collection.tsx, /src/index.css?v=fPA1coaaggH4-9UjkoQ0c[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:15:55 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/footer.tsx, /src/index.css?v=fPA1coaaggH4-9UjkoQ0c[22m
+11:16:05 AM [express] GET /api/paintings/featured 304 in 1ms :: [{"title":"Geometric Dreams","descrip…
+11:16:05 AM [express] GET /api/cart 304 in 1ms :: []
+11:16:16 AM [express] GET /api/paintings/featured 304 in 1ms :: [{"title":"Geometric Dreams","descrip…
+11:16:16 AM [express] GET /api/cart 304 in 1ms :: []
