@@ -1,8 +1,13 @@
 import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes";
+import { createServer } from "http";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+const server = createServer(app);
+
+app.get("/health", (_req, res) => {
+  res.status(200).json({ status: "ok" });
+});
 
 const allowedOrigins = (process.env.CORS_ORIGIN || process.env.FRONTEND_URL || "")
   .split(",")
@@ -62,7 +67,12 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  const server = await registerRoutes(app);
+  try {
+    const { registerRoutes } = await import("./routes");
+    await registerRoutes(app);
+  } catch (error) {
+    console.warn("API routes were not registered:", error);
+  }
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
@@ -81,12 +91,12 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  const port = Number(process.env.PORT) || 5000;
+  const PORT = process.env.PORT || 5000;
   server.listen({
-    port,
+    port: Number(PORT),
     host: "0.0.0.0",
     reusePort: true,
   }, () => {
-    log(`serving on port ${port}`);
+    log(`serving on port ${PORT}`);
   });
 })();
