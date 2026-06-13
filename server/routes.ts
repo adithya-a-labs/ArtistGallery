@@ -1,12 +1,17 @@
 import type { Express } from "express";
 import { storage } from "./storage";
 import { insertCartItemSchema, insertContactMessageSchema } from "@shared/schema";
+import fs from "fs";
 import path from "path";
 import express from "express";
 
 export async function registerRoutes(app: Express): Promise<void> {
-  // Serve static assets
-  app.use('/assets', express.static(path.join(process.cwd(), 'attached_assets')));
+  const assetsPath = path.resolve(process.cwd(), "attached_assets");
+  if (fs.existsSync(assetsPath)) {
+    app.use("/assets", express.static(assetsPath));
+  } else {
+    console.warn(`Assets directory not found at ${assetsPath}; skipping /assets static serving.`);
+  }
 
   // Get all paintings
   app.get("/api/paintings", async (req, res) => {
